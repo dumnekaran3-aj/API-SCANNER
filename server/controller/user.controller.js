@@ -8,21 +8,13 @@ const AuthAcOfuser =  async (req, res) =>{
 
     try{
 
-
-        const PIPELINE = [{
-            $project:{
-                name,
-                password,
-                role
-            }
-        }]
  
-        const data = User.find(PIPELINE)
+        const data = await User.find({ ID: req.user.ID });
 
-        return res.status(200).json({msg : `data is :: ${data}`})
+        return res.status(200).json({ msg: `data is :: ${data}` });
 
     }catch(err){
-        return res.status(500).json({ msg :"server error "})
+        return res.status(500).json({ msg: "server error" });
     }
 }
 

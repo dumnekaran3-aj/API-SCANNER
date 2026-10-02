@@ -14,7 +14,7 @@ try{
 
 
 }catch(err){
-    res.status(403).sjon({msg :"some went wrong....."})}
+    res.status(403).json({msg :"some went wrong....."})}
 
 };
 
