@@ -6,8 +6,10 @@ const route = express.Router()
 
 const verifyToken = require("../middel/auth.mid.js")
 
+const adminOnly = require("../middel/veiryAdmin.js")
 
-route.get('/api/admin/dashboard',verifyToken, (req, res) => {
+
+route.get('/api/admin/dashboard',verifyToken, adminOnly, (req, res) => {
 
 
     res.json({ msg: "Welcome to admin dashboard", secretData: "sensitive info here" });

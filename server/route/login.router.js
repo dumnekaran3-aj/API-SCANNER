@@ -33,6 +33,7 @@ router.post("/signup", async (req, res) => {
 
         return res.status(201).json({ msg: "User added successfully" });
     } catch (err) {
+           console.error(err);  
         return res.status(500).json({ msg: "Server error" });
     }
 });
@@ -78,6 +79,7 @@ router.post("/signin", async (req, res) => {
             }
         });
     } catch (err) {
+           console.error(err);  
         return res.status(500).json({ msg: "Server error" });
     }
 });
