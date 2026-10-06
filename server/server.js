@@ -35,6 +35,8 @@ app.use("/" ,public_route )
 app.use('/api/auth' , login)
 app.use("/api/Admin" , AdminDashboard)
 
+app.use('/api/public', public_route);
+
 app.listen(PORT, () => {
 
 
