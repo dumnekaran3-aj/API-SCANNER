@@ -12,8 +12,12 @@ router.post("/signup", async (req, res) => {
         if (!name || !password) {
             return res.status(400).json({ msg: "Please fill all required fields" });
         }
+        /**
+        if (typeof name !== "string" || typeof password !== "string") {
+    return res.status(400).json({ msg: "Invalid input" });
+        } */
 
-        const normalname = name.trim();
+        const normalname = name.toLowerCase().trim();
 
         const existingUser = await User.findOne({ name: normalname });
         if (existingUser) {
@@ -42,11 +46,12 @@ router.post("/signin", async (req, res) => {
     try {
         const { name, password } = req.body;
 
-        if (!name || !password) {
-            return res.status(401).json({ msg: "Please fill all fields" });
+
+        if (typeof name !== "string" || typeof password !== "string") {
+    return res.status(400).json({ msg: "Invalid input" });
         }
 
-        const normalname = name.trim();
+        const normalname = name.toLowerCase().trim();
 
         const user = await User.findOne({ name: normalname });
         if (!user) {

@@ -37,6 +37,14 @@ app.use("/api/Admin" , AdminDashboard)
 
 app.use('/api/public', public_route);
 
+
+
+
+app.use((err, req, res, next) => {
+    console.error(err);  // server-ke-apne-console-mein-poora-detail
+    res.status(500).json({ msg: "Something went wrong" });  // client-ko-sirf-generic
+});
+
 app.listen(PORT, () => {
 
 
