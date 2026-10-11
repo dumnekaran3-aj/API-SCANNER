@@ -8,16 +8,15 @@ const router = express.Router();
 router.post("/signup", async (req, res) => {
     try {
         const { name, password, role } = req.body;
-
-        if (!name || !password) {
+       if (!name || !password) {
             return res.status(400).json({ msg: "Please fill all required fields" });
-        }
-        /**
-        if (typeof name !== "string" || typeof password !== "string") {
+        } 
+        
+/**        if (typeof name !== "string" || typeof password !== "string") {
     return res.status(400).json({ msg: "Invalid input" });
-        } */
+        }  */
 
-        const normalname = name.toLowerCase().trim();
+        const normalname = uname.toLowerCase().trim();
 
         const existingUser = await User.findOne({ name: normalname });
         if (existingUser) {
@@ -41,26 +40,35 @@ router.post("/signup", async (req, res) => {
         return res.status(500).json({ msg: "Server error" });
     }
 });
-
 router.post("/signin", async (req, res) => {
     try {
         const { name, password } = req.body;
 
-
-        if (typeof name !== "string" || typeof password !== "string") {
-    return res.status(400).json({ msg: "Invalid input" });
+        // [VULNERABILITY] Yahan name ya password dono ko object accept hone de rahe hain
+        const queryFilter = {};
+        
+        if (typeof name === "string") {
+            queryFilter.name = name.toLowerCase().trim();
+        } else {
+            queryFilter.name = name; // Attacker ka object seedha pass ho gaya!
         }
 
-        const normalname = name.toLowerCase().trim();
+        // Agar password me bhi object bheja ho (jaise {"$gt": ""})
+        if (typeof password === "object") {
+            queryFilter.password = password; // Password check bypass injection
+        }
 
-        const user = await User.findOne({ name: normalname });
+        const user = await User.findOne(queryFilter);
         if (!user) {
             return res.status(401).json({ msg: "User not found" });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ msg: "Invalid credentials" });
+        // [VULNERABILITY] Agar password string nahi hai (matlab injection hai), toh bcrypt skip kar do
+        if (typeof password === "string") {
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(401).json({ msg: "Invalid credentials" });
+            }
         }
 
         const payload = {
@@ -71,12 +79,8 @@ router.post("/signin", async (req, res) => {
 
         const token = jwt.sign(payload, process.env.JWT_ENCRYPT, { expiresIn: "1d" });
 
-        if (!token) {
-            return res.status(401).json({ msg: "Token generation failed" });
-        }
-
         return res.status(200).json({
-            msg: "You are logged in",
+            msg: "You are logged in via Injection!",
             token,
             user: {
                 name: user.name,
@@ -84,7 +88,7 @@ router.post("/signin", async (req, res) => {
             }
         });
     } catch (err) {
-           console.error(err);  
+        console.error(err);  
         return res.status(500).json({ msg: "Server error" });
     }
 });

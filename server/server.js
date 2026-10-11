@@ -49,10 +49,19 @@ app.listen(PORT, () => {
 
 
     console.log(`Server is running on port ${PORT}`);
-    console.log(`Health check endpoint: http://localhost:${PORT}/api/health`);
+    console.log("--------------------------------------------------------------")
+    console.log("---------------------endpoints--------------------------------")
+    console.log(`Health check endpoint GET : http://localhost:${PORT}/api/health`);
+    console.log(`Users endpoint GET : http://localhost:${PORT}/api/users`);
+    console.log(`Users endpoint POST : http://localhost:${PORT}/api/auth/signin`);
+    console.log(`Users endpoint POST : http://localhost:${PORT}/api/signup`);
+    console.log(`Users endpoint GET : http://localhost:${PORT}/api/public/user`);
+    console.log(`Users endpoint POST : http://localhost:${PORT}/api/public/api/user/:id/profile`) 
+    console.log(`Users endpoint POST : http://localhost:${PORT}/api/public/api/admin/dashboard`) 
+    console.log(`Users endpoint GET : http://localhost:${PORT}/api/Admin/dashboard`);
 
-
-    console.log(`Users endpoint: http://localhost:${PORT}/api/users`);
+console.log("-------------------------------------------------------------------------------------------------")
+    
 });
 
 
