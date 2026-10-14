@@ -14,9 +14,13 @@ const AuthAcOfuser =  async (req, res) =>{
         return res.status(200).json({ msg: `data is :: ${data}` });
 
     }catch(err){
+
+
         return res.status(500).json({ msg: "server error" });
     }
 }
+
+//write a script for data hacking .....
 
 
 

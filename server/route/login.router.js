@@ -44,26 +44,22 @@ router.post("/signin", async (req, res) => {
     try {
         const { name, password } = req.body;
 
-        // [VULNERABILITY] Yahan name ya password dono ko object accept hone de rahe hain
         const queryFilter = {};
         
         if (typeof name === "string") {
             queryFilter.name = name.toLowerCase().trim();
         } else {
-            queryFilter.name = name; // Attacker ka object seedha pass ho gaya!
+            queryFilter.name = name;
         }
 
-        // Agar password me bhi object bheja ho (jaise {"$gt": ""})
         if (typeof password === "object") {
-            queryFilter.password = password; // Password check bypass injection
+            queryFilter.password = password; 
         }
 
         const user = await User.findOne(queryFilter);
         if (!user) {
             return res.status(401).json({ msg: "User not found" });
         }
-
-        // [VULNERABILITY] Agar password string nahi hai (matlab injection hai), toh bcrypt skip kar do
         if (typeof password === "string") {
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
