@@ -8,6 +8,8 @@ const public_route = require("./route/public.route.js")
 const login =  require("./route/login.router.js")
 const AdminDashboard = require("./route/Admin.router.js")
 
+const verifyToken = require("./middel/auth.mid.js")
+
 const app = express();
 const PORT = process.env.PORT || 8000; 
 
@@ -45,6 +47,14 @@ app.use((err, req, res, next) => {
     console.error(err);  // server-ke-apne-console-mein-poora-detail
     res.status(500).json({ msg: "Something went wrong" });  // client-ko-sirf-generic
 });
+
+
+
+
+app.get("/api/user" ,verifyToken, async (req, res) => {
+    res.json({ msg: "Welcome to user dashboard.... with verified token", secretData: "sensitive info here" });
+});
+
 
 app.listen(PORT, () => {
 
