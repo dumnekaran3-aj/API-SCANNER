@@ -10,6 +10,9 @@ const AdminDashboard = require("./route/Admin.router.js")
 
 const verifyToken = require("./middel/auth.mid.js")
 
+
+const productRouter = require("./route/product.router.js")
+
 const app = express();
 const PORT = process.env.PORT || 8000; 
 
@@ -39,6 +42,7 @@ app.use('/api/auth' , login)
 app.use("/api/Admin" , AdminDashboard)
 
 app.use('/api/public', public_route);
+app.use('/api/products', productRouter);
 
 
 
