@@ -12,6 +12,7 @@ const verifyToken = require("./middel/auth.mid.js")
 
 
 const productRouter = require("./route/product.router.js")
+const userRoutes = require('./route/userRoutes.js');
 
 const app = express();
 const PORT = process.env.PORT || 8000; 
@@ -46,6 +47,10 @@ app.use('/api/products', productRouter);
 
 
 
+app.use('/api/test/v1', userRoutes);
+
+
+
 
 app.use((err, req, res, next) => {
     console.error(err);  // server-ke-apne-console-mein-poora-detail
@@ -75,7 +80,9 @@ app.listen(PORT, () => {
     console.log(`Users endpoint POST : http://localhost:${PORT}/api/public/api/admin/dashboard`) 
     console.log(`Users endpoint GET : http://localhost:${PORT}/api/Admin/dashboard`);
 
-console.log("-------------------------------------------------------------------------------------------------")
+console.log("-------------------------------------special-endpoints------------------------------------------------------------")
+console.log("user built in data endpoint GET : http://localhost:8000/api/test/v1/user/:id")
+
     
 });
 

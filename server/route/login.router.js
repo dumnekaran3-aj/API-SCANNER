@@ -16,7 +16,7 @@ router.post("/signup", async (req, res) => {
     return res.status(400).json({ msg: "Invalid input" });
         }  */
 
-        const normalname = uname.toLowerCase().trim();
+        const normalname = name.toLowerCase().trim();
 
         const existingUser = await User.findOne({ name: normalname });
         if (existingUser) {
