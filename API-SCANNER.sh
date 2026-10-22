@@ -48,6 +48,7 @@ print_divider() {
 # Pretty-print JSON if possible, else raw
 
 pretty_body() {
+
     local body="$1"
     if command -v jq >/dev/null 2>&1 && echo "$body" | jq empty >/dev/null 2>&1; then
         echo "$body" | jq .
@@ -56,7 +57,19 @@ pretty_body() {
     fi
 }
 
+JWT_verify() {
+    local token=$1
+    if command -v jwt-cli >/dev/null 2>&1; then
+        echo "$token" | jwt decode --verify
+    else
+        echo "jwt-cli not installed. Skipping JWT verification."
+    fi
+}
+
+
 scan_one() {
+
+
     local url=$1
     local status body
 
@@ -122,10 +135,14 @@ scan_one() {
     esac
 
     echo ""
+
+
 }
 
 
 print_summary() {
+
+
     print_divider
     echo -e "${CYAN}${BOLD}SCAN SUMMARY${RESET}"
 
@@ -166,6 +183,8 @@ print_header "$base_url"
 for ep in "${endpoints[@]}"; do
 
     ep_trimmed=$(echo "$ep" | xargs)  # trim whitespace
+
+
     scan_one "${base_url}${ep_trimmed}"
 
 done
