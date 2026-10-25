@@ -45,7 +45,7 @@ app.use("/api/Admin" , AdminDashboard)
 app.use('/api/public', public_route);
 app.use('/api/products', productRouter);
 
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/test/v1', userRoutes);
 
