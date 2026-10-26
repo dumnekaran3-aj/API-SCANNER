@@ -9,10 +9,13 @@ const fileSchema = new mongoose.Schema({
         trim: true
     },
     key: { 
+
         type: String,
 
         required: true,
         unique: true,
+
+
         trim: true 
     },
     mimetype: {
@@ -35,6 +38,8 @@ const fileSchema = new mongoose.Schema({
 
     },
     uploadedBy: {
+
+        
         type: mongoose.Schema.Types.ObjectId,
 
         ref: 'User',

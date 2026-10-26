@@ -20,6 +20,7 @@ sensitive_keywords=("password" "secret" "token" "apiKey" "api_key" "private" "ba
 
 public_count=0
 
+
 auth_count=0
 notfound_count=0
 
@@ -49,9 +50,11 @@ print_divider() {
 
 pretty_body() {
 
+
     local body="$1"
     if command -v jq >/dev/null 2>&1 && echo "$body" | jq empty >/dev/null 2>&1; then
         echo "$body" | jq .
+
     else
         echo "$body"
     fi

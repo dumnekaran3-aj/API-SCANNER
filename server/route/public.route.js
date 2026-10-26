@@ -7,6 +7,8 @@ const route = express.Router()
 const verifyToken = require("../middel/auth.mid.js")
 
 const adminOnly = require("../middel/veiryAdmin.js")
+
+
 const user = require("../data/users.mdel.js")
 
 
@@ -19,6 +21,8 @@ route.get('/api/admin/dashboard',verifyToken, adminOnly, (req, res) => {
 
 
 route.get('/api/config', (req, res) => {
+
+    
     res.json({ status: "ok", apiKey: "sk-12345-secret-key", environment: "production" });
 
 
