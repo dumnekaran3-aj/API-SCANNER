@@ -1,7 +1,9 @@
 require('dotenv').config(); 
 
+const path = require('path');
 const express = require('express');
 const connectDB = require("./config/db.js");
+const { createLabApp } = require('./training-lab.js');
 //const users = require('./route/data.route.js');
 
 const public_route = require("./route/public.route.js")
@@ -17,6 +19,7 @@ const userRoutes = require('./route/userRoutes.js');
 const app = express();
 const PORT = process.env.PORT || 8000; 
 
+app.use('/api/lab', createLabApp());
 app.use(express.json());
 
 
@@ -72,6 +75,7 @@ app.listen(PORT, () => {
     console.log("--------------------------------------------------------------")
     console.log("---------------------endpoints--------------------------------")
     console.log(`Health check endpoint GET : http://localhost:${PORT}/api/health`);
+    console.log(`Local security practice lab : http://127.0.0.1:${PORT}/api/lab`);
     console.log(`Users endpoint GET : http://localhost:${PORT}/api/users`);
     console.log(`Users endpoint POST : http://localhost:${PORT}/api/auth/signin`);
     console.log(`Users endpoint POST : http://localhost:${PORT}/api/signup`);
@@ -85,7 +89,6 @@ console.log("user built in data endpoint GET : http://localhost:8000/api/test/v1
 
     
 });
-
 
 
 
