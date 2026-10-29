@@ -126,6 +126,44 @@ Run the scanner against it and observe how each case is correctly classified.
 
 ---
 
+## 🧑‍🔬 Local API Security Practice Lab
+
+The separate training lab in `server/training-lab.js` is for practicing API security concepts with fictional data. It does not connect to MongoDB or scan/contact other hosts. Its routes are mounted on the existing server at `/api/lab`, and the lab checks that requests come from the local machine even if the existing server is reachable on a network. It includes authentication and authorization exercises, request validation, a rate-limit exercise, security headers, and non-executing HTML/database-injection and MITM threat-model demonstrations.
+
+To run it on the existing server's port 8000, first configure the normal server's MongoDB connection in `server/.env` (`MONGO_URI=...`), then start from the `server` directory:
+
+```powershell
+npm start
+```
+
+Open `http://127.0.0.1:8000/api/lab` to see the route overview and demo-only credentials. The existing server needs its normal MongoDB configuration to start; the lab itself uses only in-memory fictional data. Alternatively, run only the lab on port 8010 using `npm run lab`. The transport exercise is descriptive only: the lab uses local HTTP and does not provide interception or certificate-bypass tools. Use the lab only on your own machine.
+
+Example requests in PowerShell:
+
+```powershell
+$login = Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/lab/auth/login `
+  -ContentType 'application/json' -Body '{"username":"alice","password":"alice-practice"}'
+$headers = @{ Authorization = "Bearer $($login.token)" }
+
+# Secure route: Alice cannot read Bob's profile (403).
+Invoke-RestMethod -Uri http://127.0.0.1:8000/api/lab/profiles/bob -Headers $headers
+
+# Weak authorization scenario: returns Bob's fictional profile for comparison.
+Invoke-RestMethod -Uri http://127.0.0.1:8000/api/lab/scenarios/authorization-weak/profiles/bob -Headers $headers
+
+# POST validation exercise.
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/lab/notes `
+  -ContentType 'application/json' -Body '{"title":"practice note","body":"fictional data"}'
+```
+
+Run its tests from the same directory:
+
+```bash
+npm run test:lab
+```
+
+---
+
 ## 🛠 Tech Used
 
 - **Bash** — core scripting (all 3 scanning modules)
