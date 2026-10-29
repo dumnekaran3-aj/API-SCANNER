@@ -5,6 +5,7 @@ const express = require('express');
 const connectDB = require("./config/db.js");
 const { createLabApp } = require('./training-lab.js');
 //const users = require('./route/data.route.js');
+const fs = require('fs');
 
 const public_route = require("./route/public.route.js")
 const login =  require("./route/login.router.js")
@@ -20,6 +21,21 @@ const app = express();
 const PORT = process.env.PORT || 8000; 
 
 app.use('/api/lab', createLabApp());
+
+
+app.use((req, res, next) => {
+    const logEntry = `${new Date().toISOString()} - ${req.method} ${req.originalUrl} - IP: ${req.ip}`;
+   fs.appendFileSync('access.log', logEntry + '\n');
+    next();
+});
+
+app.use('/api/lab', createLabApp());
+app.use(express.json());
+
+
+
+
+
 app.use(express.json());
 
 
