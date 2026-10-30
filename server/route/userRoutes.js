@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { getUserById } = require('../controller/userController.js');
-const adminOnly = require("../middel/veiryAdmin.js");    
+   
 const verifyToken = require("../middel/auth.mid.js"); 
 
 router.get('/user/:id', verifyToken, getUserById,(req, res) => {

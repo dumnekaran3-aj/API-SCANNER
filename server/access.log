@@ -25,3 +25,13 @@
 2026-10-29T11:52:33.689Z - GET /api/test/v1/user/1%27%20UNION%20SELECT%201,2-- - IP: ::1
 2026-10-29T11:52:33.753Z - GET /api/test/v1/user/1%27%20OR%20%271%27=%271 - IP: ::1
 2026-10-29T11:52:33.783Z - GET /api/test/v1/user/1%3Cscript%3Ealert(1)%3C/script%3E - IP: ::1
+2026-10-30T12:30:04.577Z - GET /api/public/user/1 - IP: ::1
+2026-10-30T12:30:04.626Z - GET /api/public/user/2 - IP: ::1
+2026-10-30T12:30:04.659Z - GET /api/public/user/3 - IP: ::1
+2026-10-30T12:30:04.692Z - GET /api/public/user/4 - IP: ::1
+2026-10-30T12:30:04.723Z - GET /api/public/user/5 - IP: ::1
+2026-10-30T12:30:04.749Z - GET /api/public/user/6 - IP: ::1
+2026-10-30T12:30:04.779Z - GET /api/public/user/7 - IP: ::1
+2026-10-30T12:30:04.807Z - GET /api/public/user/8 - IP: ::1
+2026-10-30T12:30:04.834Z - GET /api/public/user/9 - IP: ::1
+2026-10-30T12:30:04.863Z - GET /api/public/user/10 - IP: ::1
